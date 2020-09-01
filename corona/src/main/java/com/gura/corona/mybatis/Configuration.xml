@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- type  별칭 등록 -->
+	<typeAliases>
+		<typeAlias type="com.gura.corona.users.dto.UsersDto" 
+			alias="usersDto"/>	
+	</typeAliases>
+	
+	<!-- Mapper 등록 -->
+	<mappers>
+		<mapper resource="com/gura/corona/mybatis/UsersMapper.xml"/>
+
+	</mappers>
+	
+</configuration>
+
+
