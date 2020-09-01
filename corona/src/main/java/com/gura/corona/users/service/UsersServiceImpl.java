@@ -1,5 +1,7 @@
 package com.gura.corona.users.service;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -69,32 +71,92 @@ public class UsersServiceImpl implements UsersService {
 
 	@Override
 	public void getInfo(HttpSession session, ModelAndView mView) {
-		// TODO Auto-generated method stub
+		String id =(String)session.getAttribute("id");
+		UsersDto dto =usersdao.getData(id);
+		mView.addObject("dto",dto);
 		
 	}
 
 	@Override
 	public void deleteUser(HttpSession session) {
-		// TODO Auto-generated method stub
+		String id =(String)session.getAttribute("id");
+		usersdao.delete(id);
+		session.invalidate();
 		
 	}
 
 	@Override
 	public Map<String, Object> saveProfileImage(HttpServletRequest request, MultipartFile mFile) {
-		// TODO Auto-generated method stub
-		return null;
+		//원본 파일명
+				String orgFileName=mFile.getOriginalFilename();
+				// webapp/upload 폴더 까지의 실제 경로(서버의 파일시스템 상에서의 경로)
+				String realPath=request.getServletContext().getRealPath("/upload");
+				//저장할 파일의 상세 경로
+				String filePath=realPath+File.separator;
+				//디렉토리를 만들 파일 객체 생성
+				File upload=new File(filePath);
+				if(!upload.exists()) {//만일 디렉토리가 존재하지 않으면 
+					upload.mkdir(); //만들어 준다.
+				}
+				//저장할 파일 명을 구성한다.
+				String saveFileName=
+						System.currentTimeMillis()+orgFileName;
+				try {
+					//upload 폴더에 파일을 저장한다.
+					mFile.transferTo(new File(filePath+saveFileName));
+					System.out.println(filePath+saveFileName);
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+				//Map 에 업로드된 이미지 파일의 경로를 담아서 리턴한다
+				Map<String, Object> map=new HashMap<String, Object>();
+				map.put("imageSrc","/upload/"+saveFileName);
+				
+				return map;
 	}
 
 	@Override
 	public void updateUser(HttpSession session, UsersDto dto) {
-		// TODO Auto-generated method stub
+		//로그인된 아이디를 읽어와서 
+		String id=(String)session.getAttribute("id");
+		//UsersDto 에 담고 
+		dto.setId(id);
+		//dao 를 이용해서 수정반영하기 
+		usersdao.update(dto);
 		
 	}
 
 	@Override
 	public void updateUserPwd(HttpSession session, UsersDto dto, ModelAndView mView) {
-		// TODO Auto-generated method stub
+		String id=(String)session.getAttribute("id");
+		//세션 역역에 저장된 아이디를 dto 에 넣어준다. 
+		dto.setId(id);
+		//작업 성공여부 
+		boolean isSuccess=false;
+		//1. 기존 비밀번호와 암호화된 비밀번호가 일치하는지 확인
+		UsersDto resultDto=usersdao.getData(id); //null 일 가능성은 없다.
+		//DB 에 저장된 암호화된 비밀번호 
+		String encodedPwd=resultDto.getPwd();
+		//로그인폼에 입력한 비밀번호 
+		String inputPwd=dto.getPwd();
+		//BCrypt 클래스의 static 메소드를 이용해서 일치 여부를 얻어낸다. 
+		boolean isValid=BCrypt.checkpw(inputPwd, encodedPwd);
+		//2. 만일 일치한다면 새로운 비밀번호를 암호화 해서 저장한다.
+		if(isValid) {
+			//새로운 비밀번호를 암호화 한다.
+			BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
+			String encodedNewPwd=encoder.encode(dto.getNewPwd());
+			//암호화된 새 비밀번호를 dto 에 다시 넣어준다.
+			dto.setNewPwd(encodedNewPwd);
+			//dao 를 이용해서 DB 에 반영한다.
+			usersdao.updatePwd(dto);
+			//성공
+			isSuccess=true;
+		}
 		
+		//mView 객체에 성공 여부를 담는다.
+		mView.addObject("isSuccess", isSuccess);
+	}
 	}
 
-}
+
