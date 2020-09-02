@@ -26,7 +26,7 @@
 				<tr>
 				<td>${tmp.num }</td>
 				<td>${tmp.writer }</td>
-				<td>${tmp.title }</td>
+				<td><a href="detail.do?num=${tmp.num }">${tmp.title }</a></td>
 				<td>${tmp.viewCount }</td>
 				<td>${tmp.regdate }</td>
 				</tr>

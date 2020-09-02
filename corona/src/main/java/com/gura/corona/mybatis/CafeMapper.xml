@@ -11,6 +11,25 @@
 		insert into board_cafe(num,writer,title,content,viewcount,regdate)
 		values(board_cafe_seq.nextval,#{writer},#{title},#{content},0,sysdate)
 	</insert>
+	<select  id="getData" parameterType="int" resultType="cafeDto">
+		select num, writer, title, content, viewcount, regdate
+		from board_cafe
+		where num =#{num}
+	</select>
+	<delete id="delete" parameterType="int">
+		delete from board_cafe
+		where num =#{num}
+	</delete>
+	<update id="addviewCount" parameterType="int">
+		update board_cafe 
+		set viewCount = viewCount+1
+		where num = #{num}
+	</update>
+	<update id="update" parameterType="cafeDto">
+		update board_cafe
+		set title=#{title} , content =#{content}
+		where num = #{num}
+	</update>
 </mapper>
 
 

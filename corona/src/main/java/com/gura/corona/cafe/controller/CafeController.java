@@ -42,4 +42,33 @@ public class CafeController {
 		mView.setViewName("cafe/private/insert");
 		return mView;
 	}
+	
+	@RequestMapping("/cafe/detail.do")
+	public ModelAndView detail(ModelAndView mView, HttpServletRequest request) {
+		
+		cafeService.getData(request);
+		mView.setViewName("cafe/detail");
+		return mView;
+	}
+	@RequestMapping("/cafe/private/delete.do")
+	public String delete(HttpServletRequest request) {
+		cafeService.delete(request);
+		return "redirect:/cafe/list.do";
+	}
+	
+	@RequestMapping("/cafe/private/updateform.do")
+	public ModelAndView updateform(ModelAndView mView, HttpServletRequest request) {
+		
+		cafeService.getData(request);
+		mView.setViewName("cafe/private/updateform");
+		return mView;
+	}
+	@RequestMapping("/cafe/private/update.do")
+	public ModelAndView update(ModelAndView mView, CafeDto dto) {
+		
+		cafeService.update(dto);
+		mView.setViewName("cafe/private/update");
+		return mView;
+	}
+	
 }

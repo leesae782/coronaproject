@@ -28,4 +28,29 @@ public class CafeDaoImpl implements CafeDao{
 		session.insert("cafe.insert",dto);
 		
 	}
+
+	@Override
+	public CafeDto getData(int num) {
+		
+		CafeDto dto = session.selectOne("cafe.getData",num);
+		return dto;
+	}
+
+	@Override
+	public void delete(int num) {
+		session.delete("cafe.delete",num);
+		
+	}
+
+	@Override
+	public void addviewCount(int num) {
+		session.update("cafe.addviewCount",num);
+		
+	}
+
+	@Override
+	public void update(CafeDto dto) {
+		session.update("cafe.update",dto);
+		
+	}
 }

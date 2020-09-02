@@ -27,4 +27,25 @@ public class CafeServiceImpl implements CafeService{
 		cafedao.insert(dto);
 		
 	}
+
+	@Override
+	public void getData(HttpServletRequest request) {
+		int num=Integer.parseInt(request.getParameter("num"));
+		cafedao.addviewCount(num);
+		request.setAttribute("dto", cafedao.getData(num));
+	}
+
+	@Override
+	public void delete(HttpServletRequest request) {
+		int num=Integer.parseInt(request.getParameter("num"));
+		
+		cafedao.delete(num);
+		
+	}
+
+	@Override
+	public void update(CafeDto dto) {
+		cafedao.update(dto);
+		
+	}
 }
