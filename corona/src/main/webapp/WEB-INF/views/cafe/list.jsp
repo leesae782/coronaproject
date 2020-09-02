@@ -35,7 +35,40 @@
 		</tbody>
 	</table>
 	
-	<a href="private/insertform.do"><button class="btn btn-primary">새글작성</button></a>
+
+	<div class="page-display">
+		<ul class="pagination pagination-sm">
+		<c:if test="${startPageNum ne 1 }">
+			<li class="page-item"><a class="page-link" href="list.do?pageNum=${startPageNum-1 }&condition=${condition }&keyword=${encodedK }">Prev</a></li>
+		</c:if>
+		<c:forEach var="i" begin="${startPageNum }" end="${endPageNum }">
+			<c:choose>
+				<c:when test="${i eq pageNum }">
+					<li class="page-item active"><a class="page-link" href="list.do?pageNum=${i }&condition=${condition }&keyword=${encodedK }">${i }</a></li>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item"><a class="page-link" href="list.do?pageNum=${i }&condition=${condition }&keyword=${encodedK }">${i }</a></li>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+		<c:if test="${endPageNum lt totalPageCount }">
+			<li class="page-item"><a class="page-link" href="list.do?pageNum=${endPageNum+1 }&condition=${condition }&keyword=${encodedK }">Next</a></li>
+		</c:if>
+		</ul>	
+	</div>
+	<hr style="clear:left;"/>
+	<form action="list.do" method="get">
+		<label for="condition">검색조건</label>
+		<select name="condition" id="condition">
+			<option value="title_content" <c:if test="${condition eq 'title_content' }">selected</c:if>>제목+내용</option>
+			<option value="title" <c:if test="${condition eq 'title' }">selected</c:if>>제목</option>
+			<option value="writer" <c:if test="${condition eq 'writer' }">selected</c:if>>작성자</option>
+		</select>
+		<input value="${keyword }" type="text" name="keyword" placeholder="검색어..."/>
+		<button type="submit">검색</button>
+	</form>
+	
+		<a href="private/insertform.do"><button class="btn btn-primary">새글작성</button></a>
 </div>
 	
 	
