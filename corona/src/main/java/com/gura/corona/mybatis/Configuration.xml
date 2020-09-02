@@ -6,13 +6,15 @@
 	<!-- type  별칭 등록 -->
 	<typeAliases>
 		<typeAlias type="com.gura.corona.users.dto.UsersDto" 
-			alias="usersDto"/>	
+			alias="usersDto"/>
+		<typeAlias type="com.gura.corona.cafe.dto.CafeDto" 
+			alias="cafeDto"/>			
 	</typeAliases>
-	
+
 	<!-- Mapper 등록 -->
 	<mappers>
 		<mapper resource="com/gura/corona/mybatis/UsersMapper.xml"/>
-
+		<mapper resource="com/gura/corona/mybatis/CafeMapper.xml"/>
 	</mappers>
 	
 </configuration>
