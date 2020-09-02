@@ -13,4 +13,6 @@ public interface CafeDao {
 	public void addviewCount(int num);
 	public void update(CafeDto dto);
 	public int getCount(CafeDto dto);
+	//키워드를 활용한 글정보 얻어오기
+		public CafeDto getData(CafeDto dto);
 }

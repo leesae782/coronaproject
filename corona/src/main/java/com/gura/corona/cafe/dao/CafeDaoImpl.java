@@ -61,4 +61,10 @@ public class CafeDaoImpl implements CafeDao{
 		
 		return session.selectOne("cafe.getCount",dto);
 	}
+	
+	@Override
+	public CafeDto getData(CafeDto dto) {
+		
+		return session.selectOne("cafe.getData", dto);
+	}
 }

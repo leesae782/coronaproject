@@ -46,9 +46,27 @@
 		values(board_cafe_seq.nextval,#{writer},#{title},#{content},0,sysdate)
 	</insert>
 	<select  id="getData" parameterType="int" resultType="cafeDto">
-		select num, writer, title, content, viewcount, regdate
-		from board_cafe
-		where num =#{num}
+		SELECT result1.*
+		FROM
+			(SELECT num,writer,title,content,viewCount,
+				TO_CHAR(regdate,'YY.MM.DD HH24:MI') AS regdate,
+				LAG(num,1,0) OVER (ORDER BY num DESC) AS prevNum,
+				LEAD(num,1,0) OVER (ORDER BY num DESC) AS nextNum
+			FROM board_cafe
+			<choose>
+				<when test="title != null and content != null">
+					WHERE title LIKE '%'||#{title}||'%' 
+					OR content LIKE '%'||#{content}||'%'
+				</when>
+				<when test="title != null">
+					WHERE title LIKE '%'||#{title}||'%'
+				</when>
+				<when test="writer != null">
+					WHERE writer LIKE '%'||#{writer}||'%'
+				</when>
+			</choose>			
+			) result1
+		WHERE num=#{num}
 	</select>
 	<delete id="delete" parameterType="int">
 		delete from board_cafe
