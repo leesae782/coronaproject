@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.css" />
 </head>
 <body>
+
 <div class="container">
 	<h1>게시글 목록</h1>
 	<table class="table">
