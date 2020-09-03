@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>/users/loginform.jsp</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/bootstrap.css" />
+<script src=""></script>
 </head>
 <body>
 <div class="container">

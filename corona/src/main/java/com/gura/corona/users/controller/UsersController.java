@@ -136,5 +136,11 @@ public class UsersController {
 		mView.setViewName("redirect:/users/private/info.do");
 		return mView;
 	}
-	
+	//아이디가 존재하는지 여부를 처리하는 요청처리
+		@RequestMapping("/users/checkid")
+		@ResponseBody
+		public Map<String, Object> checkid(@RequestParam String inputId){
+			//service  가 리턴해주는 Map 객체를 리턴한다.
+			return service.isExistId(inputId);
+		}
 }

@@ -24,8 +24,12 @@ public class UsersServiceImpl implements UsersService {
 	
 	@Override
 	public Map<String, Object> isExistId(String inputId) {
-		// TODO Auto-generated method stub
-		return null;
+		//dao 를 이용해서 아이디 존재 여부를 알아내서 
+		boolean isExist=usersdao.isExist(inputId);
+		//아이디가 존재하는지 여부를 Map 에 담아서 리턴해 준다. 
+		Map<String, Object> map=new HashMap<>();
+		map.put("isExist", isExist);
+		return map;
 	}
 
 	@Override
