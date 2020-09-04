@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gura.corona.exception.NoDeliveryException;
+
 //예외 컨트롤러를 bean 으로 만들기 위한 어노테이션 
 @ControllerAdvice
 public class ExceptionController {
@@ -35,6 +37,14 @@ public class ExceptionController {
 		ModelAndView mView=new ModelAndView();
 		mView.addObject("exception", dae);
 		mView.setViewName("error/data_access");
+		return mView;
+	}
+	
+	@ExceptionHandler(NoDeliveryException.class)
+	public ModelAndView noDelivery(NoDeliveryException nde) {
+		ModelAndView mView=new ModelAndView();
+		mView.addObject("exception", nde);
+		mView.setViewName("error/no_delivery");
 		return mView;
 	}
 }

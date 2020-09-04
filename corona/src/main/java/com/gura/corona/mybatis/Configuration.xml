@@ -8,13 +8,18 @@
 		<typeAlias type="com.gura.corona.users.dto.UsersDto" 
 			alias="usersDto"/>
 		<typeAlias type="com.gura.corona.cafe.dto.CafeDto" 
-			alias="cafeDto"/>			
+			alias="cafeDto"/>	
+		<typeAlias type="com.gura.corona.shop.dto.ShopDto"
+			alias="shopDto"/>
+		<typeAlias type="com.gura.corona.shop.dto.OrderDto"
+			alias="orderDto"/>
 	</typeAliases>
 
 	<!-- Mapper 등록 -->
 	<mappers>
 		<mapper resource="com/gura/corona/mybatis/UsersMapper.xml"/>
 		<mapper resource="com/gura/corona/mybatis/CafeMapper.xml"/>
+		<mapper resource="com/gura/corona/mybatis/ShopMapper.xml"/>
 	</mappers>
 	
 </configuration>
